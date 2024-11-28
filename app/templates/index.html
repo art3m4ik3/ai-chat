@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ИИ Чат</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            .loading-dots::after {
+                content: "...";
+                animation: loadingDots 1.4s infinite;
+            }
+            @keyframes loadingDots {
+                0%,
+                20% {
+                    content: ".";
+                }
+                33% {
+                    content: "..";
+                }
+                66% {
+                    content: "...";
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+            <div id="chat-container" class="h-96 overflow-y-auto mb-4">
+                <div
+                    class="self-start bg-gray-200 p-2 rounded-lg max-w-[80%] mb-2"
+                >
+                    {{ initial_greeting }}
+                </div>
+            </div>
+            <div class="flex">
+                <input
+                    type="text"
+                    id="message-input"
+                    class="flex-grow p-2 border rounded-l-lg focus:outline-none focus:ring focus:border-blue-300"
+                    placeholder="Введите сообщение..."
+                />
+                <button
+                    id="send-btn"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition"
+                >
+                    Отправить
+                </button>
+            </div>
+            <div
+                id="loading"
+                class="hidden text-center text-gray-500 loading-dots"
+            >
+                Печатает
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.chat-message {
+    @apply p-2 rounded-lg max-w-[80%] my-2;
+}
+
+.user-message {
+    @apply bg-blue-500 text-white self-end ml-auto;
+}
+
+.ai-message {
+    @apply bg-gray-200 self-start;
+}
+
+.chat-container::-webkit-scrollbar {
+    @apply w-2;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    @apply bg-blue-300 rounded-full;
+}

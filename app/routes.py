@@ -112,6 +112,7 @@ def register():
         if not response.json().get("success"):
             flash("Необходимо подтвердить, что вы не робот")
             return redirect("/login")
+
         if User.query.filter_by(username=username).first():
             flash("Пользователь уже существует")
             return redirect("/register")
@@ -130,3 +131,52 @@ def register():
 def logout():
     logout_user()
     return redirect("/login")
+
+
+@main.route("/change_credentials", methods=["GET", "POST"])
+@login_required
+def change_credentials():
+    if request.method == "POST":
+        new_username = request.form.get("username")
+        new_password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
+        hcaptcha_response = request.form.get("h-captcha-response")
+
+        if not new_username:
+            flash("Логин не может быть пустым")
+            return redirect("/change_credentials")
+
+        if not new_password or not confirm_password:
+            flash("Пароль не может быть пустым")
+            return redirect("/change_credentials")
+
+        if new_password != confirm_password:
+            flash("Пароли не совпадают")
+            return redirect("/change_credentials")
+
+        if not hcaptcha_response:
+            flash("Необходимо подтвердить, что вы не робот")
+            return redirect("/login")
+
+        data = {"secret": Config.HCAPTCHA_SECRET_KEY, "response": hcaptcha_response}
+        response = httpx.post("https://hcaptcha.com/siteverify", data=data)
+
+        if not response.json().get("success"):
+            flash("Необходимо подтвердить, что вы не робот")
+            return redirect("/login")
+
+        if (
+            User.query.filter_by(username=new_username).first()
+            and new_username != current_user.username
+        ):
+            flash("Этот логин уже занят")
+            return redirect("/change_credentials")
+
+        current_user.username = new_username
+        current_user.password = generate_password_hash(new_password)
+        db.session.commit()
+
+        flash("Ваши данные успешно обновлены")
+        return redirect("/")
+
+    return render_template("change_credentials.html", sitekey=Config.HCAPTCHA_SITE_KEY)

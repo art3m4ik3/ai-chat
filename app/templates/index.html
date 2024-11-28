@@ -110,9 +110,14 @@
             </div>
             <div
                 id="loading"
-                class="hidden text-center text-gray-500 loading-dots"
+                class="hidden text-center text-gray-500 loading-dots mt-5 -mb-5"
             >
                 Печатает
+            </div>
+            <div class="text-center text-gray-500 mt-5">
+                <a href="/change_credentials">Сменить данные</a>
+                <br />
+                <a href="/logout">Выйти</a>
             </div>
         </div>
         <script src="{{ url_for('static', filename='js/chat.js') }}"></script>

@@ -2,6 +2,7 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ИИ Чат</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
@@ -21,27 +22,88 @@
                     content: "...";
                 }
             }
+            .dark-theme {
+                background-color: #1a1a2e !important;
+                color: #e0e0ff !important;
+            }
+            .dark-theme .bg-white {
+                background-color: #2c2c4c !important;
+            }
+            .dark-theme input,
+            .dark-theme button {
+                background-color: #3a3a5c !important;
+                color: #e0e0ff !important;
+                border-color: #4a4a6a !important;
+            }
+            .dark-theme .bg-gray-200 {
+                background-color: #4a4a6a !important;
+                color: #e0e0ff !important;
+            }
+            @media (max-width: 640px) {
+                body {
+                    padding: 1rem;
+                }
+                .container {
+                    width: 100%;
+                    max-width: 100%;
+                    margin: 0;
+                    padding: 1rem;
+                }
+                .chat-container {
+                    height: 70vh;
+                }
+                .input-container {
+                    flex-direction: column;
+                }
+                .input-container input {
+                    width: 100%;
+                    margin-bottom: 0.5rem;
+                    border-radius: 0.5rem;
+                }
+                .input-container button {
+                    width: 100%;
+                    border-radius: 0.5rem;
+                }
+                .theme-toggle {
+                    position: relative;
+                    top: 0;
+                    right: 0;
+                    margin-bottom: 1rem;
+                    align-self: flex-end;
+                }
+            }
         </style>
     </head>
-    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-        <div class="w-full max-w-md bg-white shadow-md rounded-lg p-6">
-            <div id="chat-container" class="h-96 overflow-y-auto mb-4">
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+        <div
+            class="container w-full max-w-md bg-white shadow-md rounded-lg p-6"
+        >
+            <button
+                onclick="toggleTheme()"
+                class="theme-toggle absolute top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full shadow hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+            >
+                🌓
+            </button>
+            <div
+                id="chat-container"
+                class="chat-container h-96 overflow-y-auto mb-4"
+            >
                 <div
                     class="self-start bg-gray-200 p-2 rounded-lg max-w-[80%] mb-2"
                 >
                     {{ initial_greeting }}
                 </div>
             </div>
-            <div class="flex">
+            <div class="input-container flex gap-4">
                 <input
                     type="text"
                     id="message-input"
-                    class="flex-grow p-2 border rounded-l-lg focus:outline-none focus:ring focus:border-blue-300"
+                    class="flex-grow flex-1 p-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
                     placeholder="Введите сообщение..."
                 />
                 <button
                     id="send-btn"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition"
+                    class="bg-blue-500 flex-1 inline-block text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
                 >
                     Отправить
                 </button>
@@ -54,5 +116,22 @@
             </div>
         </div>
         <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+        <script>
+            function toggleTheme() {
+                document.body.classList.toggle("dark-theme");
+                localStorage.setItem(
+                    "theme",
+                    document.body.classList.contains("dark-theme")
+                        ? "dark"
+                        : "light"
+                );
+            }
+            document.addEventListener("DOMContentLoaded", () => {
+                const savedTheme = localStorage.getItem("theme");
+                if (savedTheme === "dark") {
+                    document.body.classList.add("dark-theme");
+                }
+            });
+        </script>
     </body>
 </html>

@@ -19,6 +19,13 @@ python3 -m pip install -r requirements.txt
 py -3 -m pip install -r requirements.txt
 ```
 
+Создать .env, назначить нужные переменные
+
+```env
+HCAPTCHA_SECRET_KEY=SECRET
+HCAPTCHA_SITE_KEY=KEY
+```
+
 # Запуск
 
 ```bash

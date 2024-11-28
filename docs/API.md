@@ -26,12 +26,18 @@ Payload:
 Payload:
 
 ```json
-{ "username": "cat", "password": "123qwe", "confirm_password": "123qwe" }
+{
+    "username": "cat",
+    "password": "123qwe",
+    "confirm_password": "123qwe",
+    "h-captcha-response": "h-captcha-response"
+}
 ```
 
 Где "username" - имя пользователя
 Где "password" - пароль
 Где "confirm_password" - подтверждение пароля
+Где "h-captcha-response" - ответ hcaptcha
 
 При успешном ответе вернет статус 302, сделает редирект на главную, установит Cookie "session"
 
@@ -40,10 +46,15 @@ Payload:
 Payload:
 
 ```json
-{ "username": "cat", "password": "123qwe" }
+{
+    "username": "cat",
+    "password": "123qwe",
+    "h-captcha-response": "h-captcha-response"
+}
 ```
 
 Где "username" - имя пользователя
 Где "password" - пароль
+Где "h-captcha-response" - ответ hcaptcha
 
 При успешном ответе вернет статус 302, сделает редирект на главную, установит Cookie "session"

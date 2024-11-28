@@ -5,3 +5,4 @@ flask-cors
 g4f
 werkzeug
 httpx
+python-dotenv
